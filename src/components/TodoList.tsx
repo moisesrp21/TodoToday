@@ -83,6 +83,7 @@ const TodoList = () => {
     TodoContext = React.createContext<todocontext>(state);
     useEffect(() => {
         update();
+        //eslint-disable-next-line
     }, []);
     return (
         <div>

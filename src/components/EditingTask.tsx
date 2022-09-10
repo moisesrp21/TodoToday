@@ -26,6 +26,7 @@ const EditingTask = ({ id, value, toggleEditing }: Props) => {
         if (node) {
             node.style.height = node.scrollHeight + 'px';
         }
+        // eslint-disable-next-line
     }, []);
     const save = () => {
         todostore.editTodo({

@@ -3,7 +3,6 @@ import React from 'react';
 import Main from './pages/Main';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
-import AddTodo from './pages/AddTodo';
 import { Routes, Route, NavigateFunction } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import { usertype } from './services/requests';
