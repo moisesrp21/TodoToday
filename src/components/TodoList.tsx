@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect } from 'react';
+import React from 'react';
 import Task from './Task';
 import AddTodo from '../pages/AddTodo';
 import { todotype } from '../services/requests';
@@ -23,10 +23,6 @@ const TodoList = () => {
     if (node) {
         const resizeObserver = new ResizeObserver((es) => {
             for (const e of es) {
-                // console.log(
-                //     e.target.scrollHeight >
-                //         document.documentElement.clientHeight,
-                // );
                 if (
                     e.target.scrollHeight >
                     document.documentElement.clientHeight
@@ -119,7 +115,7 @@ const TodoList = () => {
         },
     };
     TodoContext = React.createContext<todocontext>(state);
-    useEffect(() => {
+    React.useEffect(() => {
         update();
     }, []);
     React.useEffect(() => {}, []);

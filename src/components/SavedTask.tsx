@@ -14,8 +14,9 @@ type Props = {
 const SavedTask = ({ id, title, created, completed, toggleEditing }: Props) => {
     const todostore = React.useContext<todocontext>(TodoContext);
     const [isDone, setIsDone] = React.useState<boolean>(completed);
+    //#4a4e56
     return (
-        <div className="relative flex flex-row gap-[10px] h-fit min-h-[60px] w-[95%] max-w-[1000px] rounded-[20px] bg-[#4a4e56] shadow-md">
+        <div className="relative flex flex-row gap-[10px] h-fit min-h-[60px] w-[95%] max-w-[900px] bg-transparent">
             <div>
                 <button
                     onClick={() => {
@@ -25,6 +26,9 @@ const SavedTask = ({ id, title, created, completed, toggleEditing }: Props) => {
                 >
                     <RiDeleteBinLine />
                 </button>
+                <div className="absolute flex justify-center top-[0] w-full">
+                    <div className=" w-[85%] border-t-[1px] border-[#363636]"></div>
+                </div>
                 <button
                     onClick={() => toggleEditing()}
                     className="absolute top-[-15px] left-[0px] flex justify-center p-[3px] w-[50px] bg-[#16171b] rounded-[20px] text-[1.1rem]"
@@ -39,23 +43,25 @@ const SavedTask = ({ id, title, created, completed, toggleEditing }: Props) => {
                 }}
                 className="flex flex-col items-start w-full h-full"
             >
-                <div className="flex my-[20px] flex-row gap-[10px]">
-                    <div className="flex flex-col items-center justify-start h-[100%] mx-[5px]">
-                        <button>
+                <div className="flex my-[20px] items-start gap-[10px] w-full">
+                    <div className="flex items-center justify-start">
+                        <button className="flex items-center justify-center w-[25px] h-[25px] rounded-[20px] shadow-md">
                             {isDone ? (
-                                <RiCheckboxCircleLine className="text-[1.3rem] text-[#b3cba7]" />
+                                <RiCheckboxCircleLine className="text-[1.3rem] text-[#72bc44]" />
                             ) : (
-                                <RiCheckboxBlankCircleLine className="text-[1.3rem] text-[#dff5ff]" />
+                                <RiCheckboxBlankCircleLine className="text-[1.3rem] text-[#dff5ff] " />
                             )}
                         </button>
                     </div>
-                    <pre
-                        className={`whitespace-pre-line font-sans text-[0.93rem] ${
-                            isDone ? 'line-through' : ''
-                        }`}
-                    >
-                        {title}
-                    </pre>
+                    <div className="ml-[20px] flex w-[87%]">
+                        <p
+                            className={`bg-[#363636] shadow-md cursor-pointer whitespace-pre-line break-all font-sans text-[0.93rem] p-1 rounded-[5px] border-[2px] border-solid border-[#373737] ${
+                                isDone ? 'line-through' : ''
+                            }`}
+                        >
+                            {title}
+                        </p>
+                    </div>
                 </div>
             </div>
         </div>

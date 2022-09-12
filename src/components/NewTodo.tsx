@@ -28,12 +28,9 @@ const NewTodo = () => {
         // eslint-disable-next-line
     }, [text]);
     React.useLayoutEffect(() => {
-        console.log('NewTodo');
         if (node) {
             const resizeObserver = new ResizeObserver((es) => {
-                for (const e of es) {
-                    todostore.size();
-                }
+                todostore.size();
             });
             resizeObserver.observe(node);
         }

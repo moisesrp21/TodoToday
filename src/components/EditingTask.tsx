@@ -38,7 +38,7 @@ const EditingTask = ({ id, value, toggleEditing }: Props) => {
         toggleEditing();
     };
     return (
-        <div className="relative flex flex-row gap-[10px] h-fit min-h-[60px] w-[95%] max-w-[1000px] rounded-[20px] bg-[#3f4553] p-2">
+        <div className="relative flex flex-row gap-[10px] h-fit w-[95%] max-w-[1000px] rounded-[20px] bg-transparent p-2">
             <div>
                 <button
                     onClick={save}
@@ -47,8 +47,8 @@ const EditingTask = ({ id, value, toggleEditing }: Props) => {
                     <p>save</p>
                 </button>
             </div>
-            <div className="flex flex-col w-full">
-                <div className="flex flex-row items-center gap-[10px] w-full h-full">
+            <div className="flex flex-col items-center w-full">
+                <div className="flex m-2 flex-row items-center justify-center w-full h-fit">
                     <textarea
                         value={title}
                         onChange={(e) => {
@@ -56,7 +56,7 @@ const EditingTask = ({ id, value, toggleEditing }: Props) => {
                         }}
                         ref={ref}
                         autoFocus
-                        className="bg-transparent w-[90%] h-[20px] my-[10px] ml-[20px] resize-none overflow-hidden border-none focus:outline-none focus:shadow-outline"
+                        className="bg-[#353739] w-[95%] h-auto leading-[22px] p-3 rounded-[5px] overflow-hidden resize-none border-[2px] border-solid border-[#373737] focus:outline-none focus:shadow-outline"
                         onKeyDown={(
                             e: React.KeyboardEvent<HTMLTextAreaElement>,
                         ) => adjustsize(e)}
