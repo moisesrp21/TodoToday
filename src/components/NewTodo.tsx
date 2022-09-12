@@ -9,7 +9,6 @@ const NewTodo = () => {
     const save = () => {
         let node = ref.current;
         if (node) {
-            console.log(node.value);
             todostore.addTodo({
                 id: todostore.getId(),
                 title: node.value,

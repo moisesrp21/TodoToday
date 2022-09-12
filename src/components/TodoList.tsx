@@ -5,6 +5,7 @@ import { todotype } from '../services/requests';
 import request from '../services/requests';
 import { StoreContext, contexttype } from '../App';
 import Header from '../components/Header';
+import Footer from './Footer';
 
 export interface todocontext {
     addTodo: (tast: todotype) => void;
@@ -19,7 +20,6 @@ export let TodoContext: React.Context<todocontext>;
 const TodoList = () => {
     const container = React.useRef<HTMLDivElement>(null);
     const node = container.current;
-    console.log('TodoList');
     if (node) {
         const resizeObserver = new ResizeObserver((es) => {
             for (const e of es) {
@@ -104,12 +104,11 @@ const TodoList = () => {
         size: () => {
             const node = container.current;
             if (node) {
-                // console.log(node.scrollHeight);
                 if (node.scrollHeight > document.documentElement.clientHeight) {
                     node.style.height = 'auto';
                 } else {
                     node.style.height =
-                        document.documentElement.clientHeight + 'px';
+                        document.documentElement.scrollHeight + 'px';
                 }
             }
         },
@@ -122,7 +121,7 @@ const TodoList = () => {
     return (
         <div
             ref={container}
-            className="w-full h-screen bg-[#282828] flex justify-center"
+            className="relative w-full h-screen bg-[#282828] flex flex-col items-center justify-start"
         >
             <div
                 className={`flex flex-col w-[99%] md:w-[85%] max-w-[1200px] pb-[20px] h-fit md:h-[90%] text-white rounded-[20px]`}
@@ -145,6 +144,7 @@ const TodoList = () => {
                     </div>
                 </div>
             </div>
+            <Footer />
         </div>
     );
 };

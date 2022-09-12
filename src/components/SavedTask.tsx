@@ -27,7 +27,7 @@ const SavedTask = ({ id, title, created, completed, toggleEditing }: Props) => {
                     <RiDeleteBinLine />
                 </button>
                 <div className="absolute flex justify-center top-[0] w-full">
-                    <div className=" w-[85%] border-t-[1px] border-[#363636]"></div>
+                    <div className="w-[65%] md:w-[85%] border-t-[1px] border-[#363636]"></div>
                 </div>
                 <button
                     onClick={() => toggleEditing()}
