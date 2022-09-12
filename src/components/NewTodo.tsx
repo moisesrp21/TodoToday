@@ -3,9 +3,9 @@ import { TodoContext, todocontext } from './TodoList';
 const NewTodo = () => {
     const [text, setText] = React.useState('');
     const [height, setHeight] = React.useState(0);
-    const ref = React.createRef<HTMLTextAreaElement>();
     const todostore = React.useContext<todocontext>(TodoContext);
-
+    const ref = React.useRef<HTMLTextAreaElement>(null);
+    const node = ref.current;
     const save = () => {
         let node = ref.current;
         if (node) {
@@ -20,22 +20,25 @@ const NewTodo = () => {
         }
     };
     React.useLayoutEffect(() => {
-        let node = ref.current;
         if (node) {
             node.style.height = 'auto';
             node.style.height = node.scrollHeight + 'px';
-            if (node.scrollHeight !== height) {
-                let diff = node.scrollHeight - height;
-                // console.log(diff);
-                setHeight(node.scrollHeight);
-            }
+            if (node.scrollHeight !== height) setHeight(node.scrollHeight);
         }
         // eslint-disable-next-line
     }, [text]);
-    React.useEffect(() => {
-        console.log('NewTodo called');
-        todostore.size();
-    }, [todostore]);
+    React.useLayoutEffect(() => {
+        console.log('NewTodo');
+        if (node) {
+            const resizeObserver = new ResizeObserver((es) => {
+                for (const e of es) {
+                    todostore.size();
+                }
+            });
+            resizeObserver.observe(node);
+        }
+        // eslint-disable-next-line
+    }, [node]);
     return (
         <div className="relative flex flex-row gap-[10px] h-fit w-[95%] max-w-[1000px] rounded-[20px] bg-transparent p-2">
             <div>

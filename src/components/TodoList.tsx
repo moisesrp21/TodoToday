@@ -19,13 +19,14 @@ export let TodoContext: React.Context<todocontext>;
 const TodoList = () => {
     const container = React.useRef<HTMLDivElement>(null);
     const node = container.current;
+    console.log('TodoList');
     if (node) {
         const resizeObserver = new ResizeObserver((es) => {
             for (const e of es) {
-                console.log(
-                    e.target.scrollHeight >
-                        document.documentElement.clientHeight,
-                );
+                // console.log(
+                //     e.target.scrollHeight >
+                //         document.documentElement.clientHeight,
+                // );
                 if (
                     e.target.scrollHeight >
                     document.documentElement.clientHeight
@@ -107,7 +108,7 @@ const TodoList = () => {
         size: () => {
             const node = container.current;
             if (node) {
-                console.log(node.scrollHeight);
+                // console.log(node.scrollHeight);
                 if (node.scrollHeight > document.documentElement.clientHeight) {
                     node.style.height = 'auto';
                 } else {
@@ -125,7 +126,7 @@ const TodoList = () => {
     return (
         <div
             ref={container}
-            className="w-screen h-screen bg-[#282828] flex justify-center"
+            className="w-full h-screen bg-[#282828] flex justify-center"
         >
             <div
                 className={`flex flex-col w-[99%] md:w-[85%] max-w-[1200px] pb-[20px] h-fit md:h-[90%] text-white rounded-[20px]`}
