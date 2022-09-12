@@ -19,7 +19,7 @@ type credentialstype = {
 class TodoDataService {
     prod: string = 'https://moisesrp.pythonanywhere.com';
     dev: string = 'http://localhost:8000';
-    baseurl = this.dev;
+    baseurl = this.prod;
     getAll(token: string) {
         axios.defaults.headers.common['Authorization'] = 'Token ' + token;
         return axios.get(`${this.baseurl}/api/todos/`);
