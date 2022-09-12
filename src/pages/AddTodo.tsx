@@ -2,6 +2,7 @@ import React from 'react';
 import NewTodo from '../components/NewTodo';
 import { IoMdAdd } from 'react-icons/io';
 import { AiOutlineMinus } from 'react-icons/ai';
+
 const AddTodo = () => {
     const [isAdding, setIsAdding] = React.useState<boolean>(false);
     return (

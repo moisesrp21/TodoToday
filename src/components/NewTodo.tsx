@@ -1,33 +1,43 @@
 import React from 'react';
 import { TodoContext, todocontext } from './TodoList';
-
 const NewTodo = () => {
-    const [title, setTitle] = React.useState('');
-    const todostore = React.useContext<todocontext>(TodoContext);
+    const [text, setText] = React.useState('');
+    const [height, setHeight] = React.useState(0);
     const ref = React.createRef<HTMLTextAreaElement>();
-    const initH: number = 24;
-    function adjustsize(e: React.KeyboardEvent<HTMLTextAreaElement>) {
-        const node = ref.current;
+    const todostore = React.useContext<todocontext>(TodoContext);
+
+    const save = () => {
+        let node = ref.current;
         if (node) {
-            if (e.key === 'Enter') {
-                node.style.height = initH + node.scrollHeight + 'px';
-            } else {
-                node.style.height = '0px';
-                node.style.height = node.scrollHeight + 'px';
+            console.log(node.value);
+            todostore.addTodo({
+                id: todostore.getId(),
+                title: node.value,
+                created: new Date().toString(),
+                completed: false,
+            });
+            node.value = '';
+        }
+    };
+    React.useLayoutEffect(() => {
+        let node = ref.current;
+        if (node) {
+            node.style.height = 'auto';
+            node.style.height = node.scrollHeight + 'px';
+            if (node.scrollHeight !== height) {
+                let diff = node.scrollHeight - height;
+                // console.log(diff);
+                setHeight(node.scrollHeight);
             }
         }
-    }
-    const save = () => {
-        todostore.addTodo({
-            id: todostore.getId(),
-            title: title,
-            created: new Date().toString(),
-            completed: false,
-        });
-        setTitle('');
-    };
+        // eslint-disable-next-line
+    }, [text]);
+    React.useEffect(() => {
+        console.log('NewTodo called');
+        todostore.size();
+    }, [todostore]);
     return (
-        <div className="relative flex flex-row gap-[10px] h-fit min-h-[60px] w-[95%] max-w-[1000px] rounded-[20px] bg-[#3f4553] p-2">
+        <div className="relative flex flex-row gap-[10px] h-fit w-[95%] max-w-[1000px] rounded-[20px] bg-transparent p-2">
             <div>
                 <button
                     onClick={save}
@@ -37,18 +47,15 @@ const NewTodo = () => {
                 </button>
             </div>
             <div className="flex flex-col items-center w-full">
-                <div className="flex flex-row justify-center gap-[10px] w-full h-full">
+                <div className="flex m-2 flex-row items-center justify-center w-full h-fit">
                     <textarea
-                        value={title}
-                        onChange={(e) => {
-                            setTitle(e.target.value);
-                        }}
+                        rows={1}
                         ref={ref}
+                        onChange={(e) => {
+                            setText(e.target.value);
+                        }}
                         autoFocus
-                        className="bg-transparent w-[90%] h-[20px] mt-[10px] ml-[20px] resize-none overflow-hidden border-none focus:outline-none focus:shadow-outline"
-                        onKeyDown={(
-                            e: React.KeyboardEvent<HTMLTextAreaElement>,
-                        ) => adjustsize(e)}
+                        className="bg-[#353739] w-[95%] h-auto leading-[22px] p-3 rounded-[5px] overflow-hidden resize-none border-[2px] border-solid border-[#373737] focus:outline-none focus:shadow-outline"
                     ></textarea>
                 </div>
             </div>

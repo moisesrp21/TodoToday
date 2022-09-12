@@ -2,6 +2,8 @@ import React from 'react';
 import Footer from '../components/Footer';
 import { StoreContext, contexttype } from '../App';
 import request from '../services/requests';
+import { RiLockPasswordLine } from 'react-icons/ri';
+import { BiUser } from 'react-icons/bi';
 
 const Signup = () => {
     const [username, setUsername] = React.useState('');
@@ -49,122 +51,88 @@ const Signup = () => {
         }
         setError(error);
     };
-
+    const warningcss = (n: number) =>
+        `text-white text-xs text-center italic w-full mb-[10px] px-[7px] py-[5px] rounded-lg bg-red-500 ${
+            error[n].length === 1 ? 'opacity-0' : 'opacity-1'
+        }`;
+    const warninginputcss = (n: number) =>
+        `text-white text-xs italic w-fit ml-auto my-[10px] px-[7px] py-[5px] rounded-lg bg-red-500 ${
+            error[n].length === 1 ? 'opacity-0' : 'opacity-1'
+        }`;
+    const inputdivcss = (n: number) =>
+        `flex flex-row items-center shadow appearance-none border-[1px]  rounded-[8px] w-full ${
+            error[n].length === 1 ? 'border-[#464646]' : 'border-red-500'
+        }`;
+    const inputfieldcss = `text-[#e2e2e2] bg-transparent leading-tight w-full h-full py-2 px-3 focus:outline-none focus:shadow-outline`;
+    const buttoncss = `w-full hover:bg-[#d4d4d4] text-white hover:text-black font-bold py-2 px-4 focus:outline-none focus:shadow-outline`;
     return (
-        <div className="flex flex-col w-full max-w-xs h-[50vh] justify-start">
-            <form className="bg-[#323641] shadow-md rounded-[20px] px-[30px] pt-6 pb-8 mb-4 mt-[3rem]">
-                <div className="flex flex-col">
-                    <p
-                        className={`text-white text-xs italic w-fit ml-auto my-[20px] px-[7px] py-[5px] rounded-lg bg-red-500 ${
-                            error[3].length === 1 ? 'opacity-0' : 'opacity-1'
-                        }`}
-                    >
-                        {error[3]}
-                    </p>
-                </div>
-                <div className="mb-4">
-                    <label
-                        className="block text-[#dee2e3] text-sm font-bold mb-2"
-                        htmlFor="username"
-                    >
-                        Username
-                    </label>
-                    <input
-                        className={`shadow appearance-none border rounded-[20px] w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${
-                            error[0].length === 1 ? '' : 'border-red-500'
-                        }`}
-                        type="text"
-                        placeholder="Username"
-                        value={username}
-                        onChange={(e) => {
-                            setUsername(e.target.value);
-                        }}
-                    />
-                    <p
-                        className={`text-white text-xs italic w-fit ml-auto mt-[5px] px-[5px] rounded-lg bg-red-500 ${
-                            error[0].length === 1 ? 'opacity-0' : 'opacity-1'
-                        }`}
-                    >
-                        {error[0]}
-                    </p>
-                </div>
-                <div className="mb-9"></div>
-                <div className="flex flex-col mb-6 gap-4">
-                    <div>
-                        <label
-                            className="block text-[#dee2e3] text-sm font-bold mb-2"
-                            htmlFor="password"
-                        >
-                            Password
-                        </label>
+        <div className="flex flex-col h-screen w-screen items-center bg-[#282828]">
+            <div className="flex flex-col w-full max-w-sm h-[60%] md:h-[50%] justify-center items-center mt-[80px]">
+                <form className="bg-[#212121] w-full shadow-md rounded-[15px] px-[30px] pt-6 pb-8 mb-4">
+                    <p className={warningcss(3)}>{error[3]}</p>
+                    <div className={inputdivcss(0)}>
+                        <BiUser className="text-[#dee2e3] text-[1.5rem] mx-[8px]" />
                         <input
-                            className={`shadow appearance-none border rounded-[20px] w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${
-                                error[1].length === 1 ? '' : 'border-red-500'
-                            }`}
+                            className={inputfieldcss}
+                            type="text"
+                            placeholder="Username"
+                            value={username}
+                            autoFocus
+                            onChange={(e) => {
+                                setUsername(e.target.value);
+                            }}
+                        />
+                    </div>
+                    <p className={warninginputcss(0)}>{error[0]}</p>
+                    <div className={inputdivcss(1)}>
+                        <RiLockPasswordLine className="text-[#dee2e3] text-[1.5rem] mx-[8px]" />
+                        <input
+                            className={inputfieldcss}
                             type="password"
-                            placeholder="***********"
+                            placeholder="Password"
                             value={password1}
                             onChange={(e) => {
                                 setPassword1(e.target.value);
                             }}
                         />
-                        <p
-                            className={`text-white text-xs italic w-fit ml-auto mt-[5px] px-[5px] rounded-lg bg-red-500 ${
-                                error[1].length === 1
-                                    ? 'opacity-0'
-                                    : 'opacity-1'
-                            }`}
-                        >
-                            {error[1]}
-                        </p>
                     </div>
-                    <div>
-                        <label
-                            className="block text-[#dee2e3] text-sm font-bold mb-2"
-                            htmlFor="password"
-                        >
-                            Confirm Password
-                        </label>
+                    <p className={warninginputcss(1)}>{error[1]}</p>
+                    <div className={inputdivcss(2)}>
+                        <RiLockPasswordLine className="text-[#dee2e3] text-[1.5rem] mx-[8px]" />
                         <input
-                            className={`shadow appearance-none border rounded-[20px] w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${
-                                error[2].length === 1 ? '' : 'border-red-500'
-                            }`}
+                            className={inputfieldcss}
                             type="password"
-                            placeholder="***********"
+                            placeholder="Confirm Password"
                             value={password2}
                             onChange={(e) => {
                                 setPassword2(e.target.value);
                             }}
                         />
-                        <p
-                            className={`text-white text-xs italic w-fit ml-auto mt-[5px] px-[5px] rounded-lg bg-red-500 ${
-                                error[2].length === 1
-                                    ? 'opacity-0'
-                                    : 'opacity-1'
-                            }`}
-                        >
-                            {error[2]}
-                        </p>
                     </div>
-                </div>
-                <div className="flex items-center justify-between">
-                    <button
-                        className="bg-[#ff7460] hover:bg-[#d0545e] text-white font-bold py-2 px-4 rounded-[10px] focus:outline-none focus:shadow-outline"
-                        type="button"
-                        onClick={create}
-                    >
-                        Create
-                    </button>
-                    <button
-                        className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-[10px] focus:outline-none focus:shadow-outline"
-                        type="button"
-                        onClick={login}
-                    >
-                        Login
-                    </button>
-                </div>
-            </form>
-            <Footer />
+                    <p className={warninginputcss(2)}>{error[2]}</p>
+                    <div className="flex flex-col gap-5 items-center justify-between">
+                        <div className="flex justify-center w-[70%] border-[1px] border-[#d4d4d4]">
+                            <button
+                                className={buttoncss}
+                                type="button"
+                                onClick={create}
+                            >
+                                Create
+                            </button>
+                        </div>
+                        <div className="flex justify-center w-[70%] border-[1px] border-[#d4d4d4]">
+                            <button
+                                className={buttoncss}
+                                type="button"
+                                onClick={login}
+                            >
+                                Login
+                            </button>
+                        </div>
+                    </div>
+                </form>
+                <Footer />
+            </div>
         </div>
     );
 };

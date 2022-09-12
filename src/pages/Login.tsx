@@ -2,6 +2,8 @@ import React from 'react';
 import { StoreContext, contexttype } from '../App';
 import Footer from '../components/Footer';
 import request from '../services/requests';
+import { BiUser } from 'react-icons/bi';
+import { RiLockPasswordLine } from 'react-icons/ri';
 
 const Login = () => {
     const [username, setUsername] = React.useState('');
@@ -44,84 +46,77 @@ const Login = () => {
     const signup = () => {
         store.getNav()?.('/signup');
     };
+    const warningcss = (n: number) =>
+        `text-white text-xs text-center italic w-full mb-[10px] px-[7px] py-[5px] rounded-lg bg-red-500 ${
+            error[n].length === 1 ? 'opacity-0' : 'opacity-1'
+        }`;
+    const warninginputcss = (n: number) =>
+        `text-white text-xs italic w-fit ml-auto my-[10px] px-[7px] py-[5px] rounded-lg bg-red-500 ${
+            error[n].length === 1 ? 'opacity-0' : 'opacity-1'
+        }`;
+    const inputdivcss = (n: number) =>
+        `flex flex-row items-center shadow appearance-none border-[1px]  rounded-[8px] w-full ${
+            error[n].length === 1 ? 'border-[#464646]' : 'border-red-500'
+        }`;
+    const inputfieldcss = `text-[#e2e2e2] bg-transparent leading-tight w-full h-full py-2 px-3 focus:outline-none focus:shadow-outline`;
+    const buttoncss = `w-full hover:bg-[#d4d4d4] text-white hover:text-black font-bold py-2 px-4 focus:outline-none focus:shadow-outline`;
     return (
-        <div className="flex flex-col w-full max-w-xs h-[60%] md:h-[50%] justify-center items-center">
-            <form className="bg-[#323641] w-full shadow-md rounded-[20px] px-[30px] pt-6 pb-8 mb-4">
-                <p
-                    className={`text-white text-xs text-center italic w-fit ml-auto mb-[10px] px-[7px] py-[5px] rounded-lg bg-red-500 ${
-                        error[0].length === 1 ? 'opacity-0' : 'opacity-1'
-                    }`}
-                >
-                    {error[0]}
-                </p>
-                <div className="mb-4">
-                    <label
-                        className="block text-[#dee2e3] text-sm font-bold mb-2"
-                        htmlFor="username"
-                    >
-                        Username
-                    </label>
-                    <input
-                        className="shadow appearance-none border rounded-[20px] w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                        id="username"
-                        type="text"
-                        placeholder="Username"
-                        value={username}
-                        onChange={(e) => {
-                            setUsername(e.target.value);
-                        }}
-                    />
-                </div>
-                <p
-                    className={`text-white text-xs italic w-fit ml-auto my-[10px] px-[7px] py-[5px] rounded-lg bg-red-500 ${
-                        error[1].length === 1 ? 'opacity-0' : 'opacity-1'
-                    }`}
-                >
-                    {error[1]}
-                </p>
-                <div className="mb-6">
-                    <label
-                        className="block text-[#dee2e3] text-sm font-bold mb-2"
-                        htmlFor="password"
-                    >
-                        Password
-                    </label>
-                    <input
-                        className="shadow appearance-none border rounded-[20px] w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                        id="password"
-                        type="password"
-                        placeholder="******************"
-                        value={password}
-                        onChange={(e) => {
-                            setPassword(e.target.value);
-                        }}
-                    />
-                    <p
-                        className={`text-white text-xs italic w-fit ml-auto mt-[10px] px-[7px] py-[5px] rounded-lg bg-red-500 ${
-                            error[2].length === 1 ? 'opacity-0' : 'opacity-1'
-                        }`}
-                    >
-                        {error[2]}
-                    </p>
-                </div>
-                <div className="flex items-center justify-between">
-                    <button
-                        className="bg-[#ff7460] hover:bg-[#d0545e] text-white font-bold py-2 px-4 rounded-[10px] focus:outline-none focus:shadow-outline"
-                        type="button"
-                        onClick={login}
-                    >
-                        Sign In
-                    </button>
-                    <button
-                        className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-[10px] focus:outline-none focus:shadow-outline"
-                        type="button"
-                        onClick={signup}
-                    >
-                        Sign Up
-                    </button>
-                </div>
-            </form>
-            <Footer />
+        <div className="flex flex-col h-screen w-screen items-center bg-[#282828]">
+            <div className="flex flex-col w-full max-w-sm h-[60%] md:h-[50%] justify-center items-center mt-[80px]">
+                <form className="bg-[#212121] w-full shadow-md rounded-[15px] px-[30px] pt-6 pb-8 mb-4">
+                    <p className={warningcss(0)}>{error[0]}</p>
+                    <div className={inputdivcss(1)}>
+                        <BiUser className="text-[#dee2e3] text-[1.5rem] mx-[8px]" />
+                        <input
+                            className={inputfieldcss}
+                            id="Username"
+                            type="text"
+                            placeholder={'Username'}
+                            value={username}
+                            autoFocus
+                            onChange={(e) => {
+                                setUsername(e.target.value);
+                            }}
+                        />
+                    </div>
+                    <p className={warninginputcss(1)}>{error[1]}</p>
+                    <div className={inputdivcss(2)}>
+                        <RiLockPasswordLine className="text-[#dee2e3] text-[1.5rem] mx-[8px]" />
+                        <input
+                            className={inputfieldcss}
+                            id="password"
+                            type="password"
+                            placeholder="Password"
+                            value={password}
+                            onChange={(e) => {
+                                setPassword(e.target.value);
+                            }}
+                        />
+                    </div>
+                    <p className={warninginputcss(2)}>{error[2]}</p>
+                    <div className="flex flex-col gap-5 items-center justify-between">
+                        <div className="flex justify-center w-[70%] border-[1px] border-[#d4d4d4]">
+                            <button
+                                className={buttoncss}
+                                type="button"
+                                onClick={login}
+                            >
+                                Sign In
+                            </button>
+                        </div>
+                        <div className="flex justify-center w-[70%] border-[1px] border-[#d4d4d4]">
+                            <button
+                                className={buttoncss}
+                                type="button"
+                                onClick={signup}
+                            >
+                                Sign Up
+                            </button>
+                        </div>
+                    </div>
+                </form>
+                <Footer />
+            </div>
         </div>
     );
 };

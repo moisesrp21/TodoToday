@@ -16,7 +16,6 @@ export let StoreContext: React.Context<contexttype>;
 function App() {
     const [user, setUser] = React.useState<usertype>(null);
     const navigate = useNavigate();
-    const ref = React.createRef<HTMLDivElement>();
     const store: contexttype = {
         getUser: () => {
             return user;
@@ -28,11 +27,6 @@ function App() {
             return navigate;
         },
     };
-    React.useEffect(() => {
-        if (ref.current) {
-            ref.current.style.height = ref.current.scrollHeight + 'px';
-        }
-    }, [ref]);
     React.useEffect(() => {
         let username = localStorage.getItem('user');
         let token = localStorage.getItem('token');
@@ -50,16 +44,11 @@ function App() {
     }, []);
     StoreContext = React.createContext<contexttype>(store);
     return (
-        <div
-            ref={ref}
-            className="flex w-[100vw] h-[100vh] min-h-[300px] justify-center items-start bg-[#2e3133] pt-[3px] sm:pt-[100px]"
-        >
-            <Routes>
-                <Route path="/" element={<Main />} />
-                <Route path="/login" element={<Login />} />
-                <Route path="/signup" element={<Signup />} />
-            </Routes>
-        </div>
+        <Routes>
+            <Route path="/" element={<Main />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/signup" element={<Signup />} />
+        </Routes>
     );
 }
 

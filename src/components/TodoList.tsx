@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import Task from './Task';
 import AddTodo from '../pages/AddTodo';
 import { todotype } from '../services/requests';
@@ -13,16 +13,41 @@ export interface todocontext {
     completeTodo: (id: number, isCompleted: boolean) => void;
     getId: () => number;
     getTodos: () => todotype[];
+    size: () => void;
 }
 export let TodoContext: React.Context<todocontext>;
 const TodoList = () => {
+    const container = React.useRef<HTMLDivElement>(null);
+    const node = container.current;
+    if (node) {
+        const resizeObserver = new ResizeObserver((es) => {
+            for (const e of es) {
+                console.log(
+                    e.target.scrollHeight >
+                        document.documentElement.clientHeight,
+                );
+                if (
+                    e.target.scrollHeight >
+                    document.documentElement.clientHeight
+                ) {
+                    node.style.height = 'auto';
+                } else {
+                    node.style.height =
+                        document.documentElement.clientHeight + 'px';
+                }
+            }
+        });
+        if (container.current) resizeObserver.observe(container.current);
+    }
     const store = React.useContext<contexttype>(StoreContext);
     let user = store.getUser();
     let token = user?.token ? user?.token : '';
     const [todos, setTodos] = React.useState<Array<todotype>>([]);
     const [completed, setCompleted] = React.useState(0);
     const update = async () => {
-        if (user !== null) {
+        let user = localStorage.getItem('user');
+        let token = localStorage.getItem('token');
+        if (user && token) {
             await request.getAll(token).then((res) => {
                 setTodos(res.data);
                 let count = 0;
@@ -79,29 +104,48 @@ const TodoList = () => {
             if (todos.length <= 0) return 1;
             else return todos[0].id + 1;
         },
+        size: () => {
+            const node = container.current;
+            if (node) {
+                console.log(node.scrollHeight);
+                if (node.scrollHeight > document.documentElement.clientHeight) {
+                    node.style.height = 'auto';
+                } else {
+                    node.style.height =
+                        document.documentElement.clientHeight + 'px';
+                }
+            }
+        },
     };
     TodoContext = React.createContext<todocontext>(state);
     useEffect(() => {
         update();
-        //eslint-disable-next-line
     }, []);
+    React.useEffect(() => {}, []);
     return (
-        <div>
-            <Header todos={todos} completed={completed} />
-            <div className="flex flex-1 flex-col items-center">
-                <AddTodo />
-                <div className="flex flex-col w-full h-full gap-[30px] items-center mt-[40px]">
-                    {todos.map((task) => {
-                        return (
-                            <Task
-                                key={task.id}
-                                id={task.id}
-                                title={task.title}
-                                created={task.created}
-                                completed={task.completed}
-                            />
-                        );
-                    })}
+        <div
+            ref={container}
+            className="w-screen h-screen bg-[#282828] flex justify-center"
+        >
+            <div
+                className={`flex flex-col w-[99%] md:w-[85%] max-w-[1200px] pb-[20px] h-fit md:h-[90%] text-white rounded-[20px]`}
+            >
+                <Header todos={todos} completed={completed} />
+                <div className="flex flex-1 flex-col items-center">
+                    <AddTodo />
+                    <div className="flex flex-col w-full h-full gap-[30px] items-center mt-[40px] mb-[20px]">
+                        {todos.map((task) => {
+                            return (
+                                <Task
+                                    key={task.id}
+                                    id={task.id}
+                                    title={task.title}
+                                    created={task.created}
+                                    completed={task.completed}
+                                />
+                            );
+                        })}
+                    </div>
                 </div>
             </div>
         </div>
