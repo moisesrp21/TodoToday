@@ -1,6 +1,6 @@
 # Project Structure
 
-<img src="./TodoToday.gif" style="text-align:center" width="365" height="655" />
+<img src="./TodoToday.gif" style="text-align:center" width="400" height="600" />
 
 ```fish
  src/
