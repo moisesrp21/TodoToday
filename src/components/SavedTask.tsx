@@ -3,6 +3,8 @@ import { RiCheckboxCircleLine } from 'react-icons/ri';
 import { RiCheckboxBlankCircleLine } from 'react-icons/ri';
 import { RiDeleteBinLine } from 'react-icons/ri';
 import { TodoContext, todocontext } from './TodoList';
+import { motion } from 'framer-motion';
+
 import React from 'react';
 type Props = {
     id: number;
@@ -10,31 +12,50 @@ type Props = {
     created: string;
     completed: boolean;
     toggleEditing: () => void;
+    tocomplete: number;
+    setToComplete: (n: number) => void;
 };
-const SavedTask = ({ id, title, created, completed, toggleEditing }: Props) => {
+const SavedTask = ({
+    id,
+    title,
+    created,
+    completed,
+    toggleEditing,
+    tocomplete,
+    setToComplete,
+}: Props) => {
     const todostore = React.useContext<todocontext>(TodoContext);
     const [isDone, setIsDone] = React.useState<boolean>(completed);
     //#4a4e56
     return (
-        <div className="relative flex flex-row gap-[10px] h-fit min-h-[60px] w-[95%] max-w-[900px] bg-transparent">
+        <motion.div
+            initial={{ opacity: 0, y: 15 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="relative flex flex-row gap-[10px] h-fit min-h-[60px] w-[95%] max-w-[900px] bg-transparent"
+        >
             <div>
-                <button
+                <motion.button
+                    whileHover={{ scale: 1.1 }}
+                    whileTap={{ scale: 0.9 }}
                     onClick={() => {
+                        setToComplete(tocomplete === 0 ? 0 : tocomplete - 1);
                         todostore.delTodo(id);
                     }}
                     className="absolute top-[-15px] right-[5px] flex justify-center p-[3px] w-[50px] bg-[#9f0e0d] rounded-[20px] text-[1.1rem] text-bold"
                 >
                     <RiDeleteBinLine />
-                </button>
+                </motion.button>
                 <div className="absolute flex justify-center top-[0] w-full">
                     <div className="w-[65%] md:w-[85%] border-t-[1px] border-[#363636]"></div>
                 </div>
-                <button
+                <motion.button
+                    whileHover={{ scale: 1.1 }}
+                    whileTap={{ scale: 0.9 }}
                     onClick={() => toggleEditing()}
                     className="absolute top-[-15px] left-[0px] flex justify-center p-[3px] w-[50px] bg-[#16171b] rounded-[20px] text-[1.1rem]"
                 >
                     <BiEdit />
-                </button>
+                </motion.button>
             </div>
             <div
                 onClick={() => {
@@ -64,7 +85,7 @@ const SavedTask = ({ id, title, created, completed, toggleEditing }: Props) => {
                     </div>
                 </div>
             </div>
-        </div>
+        </motion.div>
     );
 };
 

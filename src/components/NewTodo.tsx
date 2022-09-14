@@ -1,5 +1,7 @@
 import React from 'react';
 import { TodoContext, todocontext } from './TodoList';
+import { motion } from 'framer-motion';
+
 const NewTodo = () => {
     const [text, setText] = React.useState('');
     const [height, setHeight] = React.useState(0);
@@ -21,7 +23,7 @@ const NewTodo = () => {
     React.useLayoutEffect(() => {
         if (node) {
             node.style.height = 'auto';
-            node.style.height = node.scrollHeight + 'px';
+            node.style.height = node.scrollHeight + 4 + 'px';
             if (node.scrollHeight !== height) setHeight(node.scrollHeight);
         }
         // eslint-disable-next-line
@@ -36,7 +38,11 @@ const NewTodo = () => {
         // eslint-disable-next-line
     }, [node]);
     return (
-        <div className="relative flex flex-row gap-[10px] h-fit w-[95%] max-w-[1000px] rounded-[20px] bg-transparent p-2">
+        <motion.div
+            initial={{ opacity: 0, y: 15 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="relative flex flex-row gap-[10px] h-fit w-[95%] max-w-[1000px] rounded-[20px] bg-transparent p-2"
+        >
             <div>
                 <button
                     onClick={save}
@@ -54,11 +60,11 @@ const NewTodo = () => {
                             setText(e.target.value);
                         }}
                         autoFocus
-                        className="bg-[#353739] w-[95%] h-auto leading-[22px] p-3 rounded-[5px] overflow-hidden resize-none border-[2px] border-solid border-[#373737] focus:outline-none focus:shadow-outline"
+                        className="bg-[#353739] w-[95%] h-fit leading-[22px] p-3 rounded-[5px] overflow-hidden resize-none border-[2px] border-solid border-[#373737] focus:outline-none focus:shadow-outline"
                     ></textarea>
                 </div>
             </div>
-        </div>
+        </motion.div>
     );
 };
 

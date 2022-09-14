@@ -6,6 +6,7 @@ import request from '../services/requests';
 import { StoreContext, contexttype } from '../App';
 import Header from '../components/Header';
 import Footer from './Footer';
+import { motion } from 'framer-motion';
 
 export interface todocontext {
     addTodo: (tast: todotype) => void;
@@ -119,7 +120,10 @@ const TodoList = () => {
     }, []);
     React.useEffect(() => {}, []);
     return (
-        <div
+        <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.4, type: 'esaeInOut' }}
             ref={container}
             className="relative w-full h-screen bg-[#282828] flex flex-col items-center justify-start"
         >
@@ -138,6 +142,8 @@ const TodoList = () => {
                                     title={task.title}
                                     created={task.created}
                                     completed={task.completed}
+                                    tocomplete={completed}
+                                    setToComplete={setCompleted}
                                 />
                             );
                         })}
@@ -145,7 +151,7 @@ const TodoList = () => {
                 </div>
             </div>
             <Footer />
-        </div>
+        </motion.div>
     );
 };
 

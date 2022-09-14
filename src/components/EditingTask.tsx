@@ -4,8 +4,16 @@ interface Props {
     id: number;
     value: string;
     toggleEditing: () => void;
+    tocomplete: number;
+    setToComplete: (n: number) => void;
 }
-const EditingTask = ({ id, value, toggleEditing }: Props) => {
+const EditingTask = ({
+    id,
+    value,
+    toggleEditing,
+    tocomplete,
+    setToComplete,
+}: Props) => {
     const [title, setTitle] = React.useState(value);
     const todostore = React.useContext<todocontext>(TodoContext);
     const ref = React.createRef<HTMLTextAreaElement>();
@@ -29,6 +37,7 @@ const EditingTask = ({ id, value, toggleEditing }: Props) => {
         // eslint-disable-next-line
     }, []);
     const save = () => {
+        setToComplete(tocomplete === 0 ? 0 : tocomplete - 1);
         todostore.editTodo({
             id: id,
             title: title,
@@ -54,9 +63,10 @@ const EditingTask = ({ id, value, toggleEditing }: Props) => {
                         onChange={(e) => {
                             setTitle(e.target.value);
                         }}
+                        rows={1}
                         ref={ref}
                         autoFocus
-                        className="bg-[#353739] w-[95%] h-auto leading-[22px] p-3 rounded-[5px] overflow-hidden resize-none border-[2px] border-solid border-[#373737] focus:outline-none focus:shadow-outline"
+                        className="bg-[#353739] w-[95%] h-fit leading-[22px] p-3 rounded-[5px] overflow-hidden resize-none border-[2px] border-solid border-[#373737] focus:outline-none focus:shadow-outline"
                         onKeyDown={(
                             e: React.KeyboardEvent<HTMLTextAreaElement>,
                         ) => adjustsize(e)}

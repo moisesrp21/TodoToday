@@ -2,12 +2,14 @@ import React from 'react';
 import NewTodo from '../components/NewTodo';
 import { IoMdAdd } from 'react-icons/io';
 import { AiOutlineMinus } from 'react-icons/ai';
-
+import { motion } from 'framer-motion';
 const AddTodo = () => {
     const [isAdding, setIsAdding] = React.useState<boolean>(false);
     return (
         <div className="flex gap-6 flex-col w-full items-center mt-[20px]">
-            <button
+            <motion.button
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.9 }}
                 onClick={() => {
                     setIsAdding(!isAdding);
                 }}
@@ -18,7 +20,7 @@ const AddTodo = () => {
                 ) : (
                     <IoMdAdd className="text-white" />
                 )}
-            </button>
+            </motion.button>
             {isAdding ? <NewTodo /> : ''}
         </div>
     );

@@ -1,4 +1,7 @@
 # Project Structure
+
+<img src="./TodoToday.gif" style="text-align:center" width="365" height="655" />
+
 ```fish
  src/
 ├──  components/
